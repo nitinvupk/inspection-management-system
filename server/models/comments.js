@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema({
   user: String,
   body: String,
   report_id: String,
-  created_at: new Date()
+  created_at: Date,
 });
 
 const Comments = mongoose.model('comment', commentSchema);
