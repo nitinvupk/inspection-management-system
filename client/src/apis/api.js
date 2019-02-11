@@ -22,9 +22,9 @@ const get = async (url) => {
   }
 }
 
-const put = async (url,user) => {
+const put = async (url,status) => {
   try{
-    const response = await axios.put(`${baseUrl}${url}`,user);
+    const response = await axios.put(`${baseUrl}${url}`, {status}, { headers:{"x-access-token": window.localStorage.getItem("token")}});
     return response.data;
   }
   catch(err){

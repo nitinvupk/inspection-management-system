@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import { watchUserLogin, watchUserRegister } from './user';
-import { watchAddInspectionReport, watchInspectionReport } from './inspectionReport';
+import { watchAddInspectionReport, watchInspectionReport, watchUpdateStatus } from './inspectionReport';
+import { watchAddComment, watchComments } from './comments';
 import { watchUserLocation, watchWeatherLocation, watchSearchLocation, watchSearchLocationDetails } from './userInfo';
 
 function* rootSaga() {
@@ -9,6 +10,9 @@ function* rootSaga() {
     watchUserRegister(),
     watchAddInspectionReport(),
     watchInspectionReport(),
+    watchAddComment(),
+    watchComments(),
+    watchUpdateStatus(),
     watchUserLocation(),
     watchWeatherLocation(),
     watchSearchLocation(),

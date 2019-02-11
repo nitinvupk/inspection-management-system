@@ -1,6 +1,7 @@
 import {
   ADD_INSPECTION_REPORT_SUCCESS,
-  INSPECTION_REPORT_SUCCESS
+  INSPECTION_REPORT_SUCCESS,
+  UPDATE_STATUS_SUCCESS
 } from "../constants";
 
 const initialState = {
@@ -19,6 +20,10 @@ const inspectionReport = (state = initialState, action) => {
       return {
         ...state,
         reports: action.payload.reports
+      };
+    case UPDATE_STATUS_SUCCESS:
+      return {
+        ...state
       };
     default:
       return state;

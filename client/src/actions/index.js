@@ -6,6 +6,12 @@ import { LOGIN_USER,
          ADD_INSPECTION_REPORT_SUCCESS,
          INSPECTION_REPORT,
          INSPECTION_REPORT_SUCCESS,
+         ADD_COMMENT,
+         ADD_COMMENT_SUCCESS,
+         COMMENT_DETAILS,
+         COMMENT_DETAILS_SUCCESS,
+         UPDATE_STATUS,
+         UPDATE_STATUS_SUCCESS,
          USER_LOCATION,
          USER_LOCATION_SUCCESS,
          WEATHER_LOCATION_DETAILS,
@@ -33,6 +39,18 @@ export const addInspectionReportSuccess = payload => ({ type:ADD_INSPECTION_REPO
 export const getInspectionReport = () => ({ type: INSPECTION_REPORT });
 
 export const listInspectionReport = (payload) => ({ type: INSPECTION_REPORT_SUCCESS, payload });
+
+export const addComment = payload => ({ type: ADD_COMMENT, payload });
+
+export const addCommentSuccess = payload => ({ type:ADD_COMMENT_SUCCESS, payload });
+
+export const getComments = (reportId) => ({ type: COMMENT_DETAILS, reportId });
+
+export const listComments = (payload) => ({ type: COMMENT_DETAILS_SUCCESS, payload });
+
+export const updateStatus = payload => ({ type: UPDATE_STATUS, payload });
+
+export const updateStatusSuccess = payload => ({ type:UPDATE_STATUS_SUCCESS, payload });
 
 
 

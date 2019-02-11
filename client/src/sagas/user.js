@@ -29,6 +29,8 @@ function* loginUser(data) {
     const payload = yield call(api.create, "/api/login", data.payload);
     if (payload.auth) {
       window.localStorage.setItem("token", payload.token);
+      window.localStorage.setItem("user", payload.currentUser.name);
+      window.localStorage.setItem("role", payload.currentUser.role);
     }
     yield put({ type: LOGIN_SUCCESS, payload });
   } catch (err) {
