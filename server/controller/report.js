@@ -2,6 +2,15 @@ const Report = require('../models/report');
 
 exports.createReport = async (req, res) => {
   try {
+    
+    if(!req.body.project_name 
+      || !req.body.floor 
+      || !req.body.zone 
+      || !req.body.title
+      || !req.body.status) {
+        return res.send({ auth: true, success: false, message: 'Please fill the required fields' });
+      }
+
     const report = new Report({
       project_name: req.body.project_name,
       floor: req.body.floor,
@@ -35,7 +44,20 @@ exports.getReports = async (req, res) => {
 
 exports.updateReport = async (req, res) => {
   try {
-    
+    let updateQuery;
+    if(req.body.status === 'Completed') {
+      updateQuery = {
+        status: req.body.status,
+        archived: true
+      }
+    } else {
+      updateQuery = {
+        status: req.body.status
+      }
+    }
+    const report = await Report.update({ _id: req.params.id }, updateQuery );
+    res.send({ auth: true, success: true, report });
+
   } catch (err) {
     console.log(err);
   }
@@ -43,7 +65,10 @@ exports.updateReport = async (req, res) => {
 
 exports.deleteReport = async (req, res) => {
   try {
-
+  
+    await Report.remove({ _id: req.params.id });
+    res.send({ auth: true, success: true, message: 'report deleted' });
+  
   } catch (err) {
     console.log(err);
   }

@@ -8,6 +8,7 @@ const verifyToken = (req, res, next) => {
 
   jwt.verify(token, config.secret, function(err, decoded) {
     req.userId = decoded.id;
+    req.userRole = decoded.role;
     next();
   });
 }

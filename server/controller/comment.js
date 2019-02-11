@@ -18,7 +18,7 @@ exports.createComment = async (req, res) => {
 
 exports.getComments = async (req, res) => {
   try {
-    const comments = await Comments.find({ report_id: req.query.report_id });
+    const comments = await Comments.find({ report_id: req.params.id });
     res.send({ auth: true, success: true, comments });
   } catch (err) {
     console.log(err);
