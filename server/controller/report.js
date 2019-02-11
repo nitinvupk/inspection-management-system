@@ -10,12 +10,12 @@ exports.createReport = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      created_by: req.body.created_by,
+      created_by: req.userId,
       created_at: new Date()
     });
 
     await report.save();
-    res.send({ auth: true, success: true, message: 'new report has been created' });
+    res.send({ auth: true, success: true, report });
   
   } catch (err) {
     console.log(err);
@@ -24,7 +24,10 @@ exports.createReport = async (req, res) => {
 
 exports.getReports = async (req, res) => {
   try {
-
+  
+    const reports = await Report.find({ created_by: req.userId });
+    res.send({ auth: true, success: true, reports });
+  
   } catch (err) {
     console.log(err);
   }
