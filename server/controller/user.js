@@ -28,91 +28,91 @@ exports.registerUser = async (req, res) => {
       role: req.body.role,
       password: hashedPass,
     });
-    await user.save();
 
     const token = jwt.sign({id: user._id}, config.secret, {expiresIn: 86400});
-    await User.findByIdAndUpdate({_id: user._id }, {$push: { loginToken: token }});
-    if(req.body.token) return res.send({auth: true, token: token, currentUser:user});
-    return res.send({auth: true, currentUser:user,  message:"new user created.Please switch to list user to see."});
     
+    user.loginToken = token;
+    await user.save();
+    res.send({auth: true, token: token, currentUser:user});
+  
   } catch (err) {
     console.log(err);
   }
 }
 
-exports.getUsers = async (req, res, next) => {
-  try{
+// exports.getUsers = async (req, res, next) => {
+//   try{
 
-    if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
+//     if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
 
-    const user = await User.findById({ _id: req.userId }, { password: 0 });
+//     const user = await User.findById({ _id: req.userId }, { password: 0 });
 
-    if(!user) res.send({auth: false, message: "No user found with this id"});
+//     if(!user) res.send({auth: false, message: "No user found with this id"});
     
-    if(user.role === "admin"){
-      const user = await User.find({role:"user"});
-      res.send({user,success:true});
-    }
-    else{
-      res.send({auth:false,success:false});
-    }
-  }
-  catch(err){
-    console.log(err);
-  }
-}
+//     if(user.role === "admin"){
+//       const user = await User.find({role:"user"});
+//       res.send({user,success:true});
+//     }
+//     else{
+//       res.send({auth:false,success:false});
+//     }
+//   }
+//   catch(err){
+//     console.log(err);
+//   }
+// }
 
-exports.updateUser = async (req, res, next) => {
-  try{
+// exports.updateUser = async (req, res, next) => {
+//   try{
 
-    if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
+//     if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
 
-    const user = await User.findById({ _id: req.userId }, { password: 0 });
+//     const user = await User.findById({ _id: req.userId }, { password: 0 });
     
-    if(!user) res.send({auth: false, message: "No user found with this id"});
+//     if(!user) res.send({auth: false, message: "No user found with this id"});
     
-    if(user.role === "admin"){
+//     if(user.role === "admin"){
 
-      if(!req.body.password) return res.send({success:false, message:"please provide a new password."});
+//       if(!req.body.password) return res.send({success:false, message:"please provide a new password."});
 
-      const hashedPass = bcrypt.hashSync(req.body.password,8);
-      await User.findByIdAndUpdate({_id:req.params.id},{$set:{
-        name:req.body.name,
-        email:req.body.email,
-        password:hashedPass
-      }});
-      res.send({success:true, message:"User updated.Please go to list user to see."});
-    }
-    else{
-      res.send({auth:false,success:false});
-    }
-  }
-  catch(err){
-    console.log(err);
-  }
-}
+//       const hashedPass = bcrypt.hashSync(req.body.password,8);
+//       await User.findByIdAndUpdate({_id:req.params.id},{$set:{
+//         name:req.body.name,
+//         email:req.body.email,
+//         password:hashedPass
+//       }});
+//       res.send({success:true, message:"User updated.Please go to list user to see."});
+//     }
+//     else{
+//       res.send({auth:false,success:false});
+//     }
+//   }
+//   catch(err){
+//     console.log(err);
+//   }
+// }
 
-exports.deleteUser = async (req, res, next) => {
-  try{
+// exports.deleteUser = async (req, res, next) => {
+//   try{
 
-    if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
+//     if(!req.userId) res.send({auth: false, message: "token verified but id not found."});
 
-    const user = await User.findById({ _id: req.userId }, { password: 0 });
+//     const user = await User.findById({ _id: req.userId }, { password: 0 });
     
-    if(!user) res.send({auth: false, message: "No user found with this id"});
+//     if(!user) res.send({auth: false, message: "No user found with this id"});
     
-    if(user.role === "admin"){
-      await User.findByIdAndRemove({_id:req.params.id});
-      res.send({success:true});
-    }
-    else{
-      res.send({auth:false,success:false});
-    }
-  }
-  catch(err){
-    console.log(err);
-  } 
-}
+//     if(user.role === "admin"){
+//       await User.findByIdAndRemove({_id:req.params.id});
+//       res.send({success:true});
+//     }
+//     else{
+//       res.send({auth:false,success:false});
+//     }
+//   }
+//   catch(err){
+//     console.log(err);
+//   } 
+// }
 
 exports.loginUsers = async (req, res) => {
   try{
@@ -142,29 +142,18 @@ exports.loginUsers = async (req, res) => {
   }
 }
 
-exports.filterUsers = async (req, res) => {
-  try{
+// exports.getCurrentUser = async (req, res,next) => {
+//   try{
     
-    const user = await User.find({$and:[{name: { $regex: `${req.params.data}`}},{role:"user"}]});
-    res.send({user,success:true});
-  }
-  catch(err){
-    console.log(err);
-  }
-}
-
-exports.getCurrentUser = async (req, res,next) => {
-  try{
-    
-    if(req.params.id === "currentUser"){
-      const user = await User.findOne({_id:req.userId});
-      res.send({auth: true, currentUser:user});
-    }
-  }
-  catch(err){
-    console.log(err);
-  }
-}
+//     if(req.params.id === "currentUser"){
+//       const user = await User.findOne({_id:req.userId});
+//       res.send({auth: true, currentUser:user});
+//     }
+//   }
+//   catch(err){
+//     console.log(err);
+//   }
+// }
 
 exports.logoutUser = (req, res) => {
   res.send({ auth: false, token: null });
