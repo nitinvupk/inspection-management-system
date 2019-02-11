@@ -4,8 +4,8 @@ import history from './history';
 import Login from './containers/login';
 import User from './containers/userInfo';
 import Register from './containers/register';
-import InspectionReport from './components/InspectionReport';
-import AddInspectionReport from './components/InspectionReport/addInspectionReport';
+import InspectionReport from './containers/inspectionReport';
+import AddInspectionReport from './containers/addInspectionReport';
 
 class App extends Component {
   render() {

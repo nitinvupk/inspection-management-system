@@ -3,8 +3,29 @@ import { Link } from "react-router-dom";
 import { buildings, floor, zones } from "../building";
 
 class AddInspectionReport extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.title = React.createRef();
+    this.project_name = React.createRef();
+    this.floor = React.createRef();
+    this.zone = React.createRef();
+    this.description = React.createRef();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(e) {
+    const title = this.title.current.value;
+    const project_name = this.project_name.current.value;
+    const floor = this.floor.current.value;
+    const zone = this.zone.current.value;
+    const description = this.description.current.value;
+    const status = 'Opened';
+    await this.props.addInspectionReport({ title, project_name, floor, zone, description, status });
+  }
+
   render() {
-    console.log(buildings);
+    console.log(this.props.addInspection);
     return (
       <React.Fragment>
         <div className="container">
@@ -42,14 +63,13 @@ class AddInspectionReport extends React.Component {
               </Link>
             </div>
           </nav>
-          <form>
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Title</label>
-            <input type="text" className="form-control"/>
+            <input type="text" className="form-control" ref={this.title}/>
           </div>
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Project Name</label>
-              <select className="form-control" id="exampleFormControlSelect1">
+              <select className="form-control" ref={this.project_name}>
               {buildings.map(({name}, index) => (
                           <option key={index} value={name}>
                             {name}
@@ -59,7 +79,7 @@ class AddInspectionReport extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Floor Number</label>
-              <select className="form-control" id="exampleFormControlSelect1">
+              <select className="form-control" name="floor" ref={this.floor}>
               {floor.map(({name}, index) => (
                           <option key={index} value={name}>
                             {name}
@@ -69,7 +89,7 @@ class AddInspectionReport extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Zone Name</label>
-              <select className="form-control" id="exampleFormControlSelect1">
+              <select className="form-control" name="zone" ref={this.zone}>
               {zones.map(({name}, index) => (
                           <option key={index} value={name}>
                             {name}
@@ -86,17 +106,17 @@ class AddInspectionReport extends React.Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleFormControlTextarea1">
+              <label>
                 Description
               </label>
               <textarea
                 className="form-control"
-                id="exampleFormControlTextarea1"
+                name="description"
                 rows="3"
+                ref={this.description}
               />
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
+            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
         </div>
       </React.Fragment>
     );

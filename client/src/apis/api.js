@@ -14,7 +14,7 @@ const getIPInfo = async (url) => {
 
 const get = async (url) => {
   try{
-    const response = await axios.get(`${baseUrl}${url}`);
+    const response = await axios.get(`${baseUrl}${url}`, { headers:{"x-access-token": window.localStorage.getItem("token")}});
     return response.data;
   }
   catch(err){
@@ -44,7 +44,7 @@ const remove = async (url) => {
 
 const create = async (url,user) => {
   try{
-    const response = await axios.post(`${baseUrl}${url}`,user);
+    const response = await axios.post(`${baseUrl}${url}`,user, { headers:{"x-access-token": window.localStorage.getItem("token")}});
     return response.data;
   }
   catch(err){

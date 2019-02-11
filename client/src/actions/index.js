@@ -2,6 +2,10 @@ import { LOGIN_USER,
          LOGIN_SUCCESS,
          REGISTER_USER,
          REGISTER_USER_SUCCESS,
+         ADD_INSPECTION_REPORT,
+         ADD_INSPECTION_REPORT_SUCCESS,
+         INSPECTION_REPORT,
+         INSPECTION_REPORT_SUCCESS,
          USER_LOCATION,
          USER_LOCATION_SUCCESS,
          WEATHER_LOCATION_DETAILS,
@@ -21,6 +25,16 @@ export const RegisterSuccess = payload => ({ type:REGISTER_USER_SUCCESS, payload
 export const LoginUser = payload => ({ type:LOGIN_USER, payload });
 
 export const LoginSuccess = payload => ({ type:LOGIN_SUCCESS, payload });
+
+export const addInspectionReport = payload => ({ type: ADD_INSPECTION_REPORT, payload });
+
+export const addInspectionReportSuccess = payload => ({ type:ADD_INSPECTION_REPORT_SUCCESS, payload });
+
+export const getInspectionReport = () => ({ type: INSPECTION_REPORT });
+
+export const listInspectionReport = (payload) => ({ type: INSPECTION_REPORT_SUCCESS, payload });
+
+
 
 export const getUserLocation = () => ({ type: USER_LOCATION });
 
