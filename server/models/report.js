@@ -7,10 +7,13 @@ const reportSchema = new mongoose.Schema({
   image: String,
   title: String,
   description: String,
-  archived: Boolean,
+  archived: {
+    type: Boolean,
+    default: false
+  },
   status: String,
   created_by: String,
-  created_at: new Date()
+  created_at: Date
 });
 
 const Report = mongoose.model('report',reportSchema);

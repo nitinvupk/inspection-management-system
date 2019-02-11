@@ -5,7 +5,6 @@ const config = require('../config');
 
 exports.registerUser = async (req, res) => {
   try {
-
     if(!req.body.name){
       res.send({auth:false , message: "Name is required."});
       return
@@ -22,7 +21,7 @@ exports.registerUser = async (req, res) => {
     }
 
     const hashedPass = bcrypt.hashSync(req.body.password,8);
-    const user = await User.create({
+    const user = new User({
       name: req.body.name,
       email: req.body.email,
       role: req.body.role,
