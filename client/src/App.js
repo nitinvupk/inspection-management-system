@@ -4,11 +4,12 @@ import history from './history';
 import Login from './containers/login';
 import User from './containers/userInfo';
 import Register from './containers/register';
-import Dashboard from './components/Dashboard';
+import InspectionReport from './components/InspectionReport';
+import AddInspectionReport from './components/InspectionReport/addInspectionReport';
 
 class App extends Component {
   render() {
-    //
+
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={(props) => window.localStorage.getItem('token') ?
       <Component {...props}/> : <Redirect to='/'/>}
@@ -19,7 +20,8 @@ class App extends Component {
       <div>
       <Router history={history}>
         <Switch>
-          <PrivateRoute path='/dashboard' component={Dashboard}/>
+          <PrivateRoute path='/AddInspectionReport' component={AddInspectionReport}/>
+          <PrivateRoute path='/InspectionReport' component={InspectionReport}/>
           <Route exact path='/register' component={Register}/>
           <PrivateRoute path='/user' component={User}/>
           <Route exact path='/' component={Login}/>

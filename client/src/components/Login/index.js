@@ -13,7 +13,7 @@ class Login extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.user.token !== nextProps.user.token) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/InspectionReport');
     }
   }
 
