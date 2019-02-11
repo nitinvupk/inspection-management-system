@@ -55,7 +55,7 @@ exports.updateReport = async (req, res) => {
         status: req.body.status
       }
     }
-    const report = await Report.update({ _id: req.params.id }, updateQuery );
+    const report = await Report.update({ _id: req.query.reportId }, updateQuery );
     res.send({ auth: true, success: true, report });
 
   } catch (err) {
@@ -66,7 +66,7 @@ exports.updateReport = async (req, res) => {
 exports.deleteReport = async (req, res) => {
   try {
   
-    await Report.remove({ _id: req.params.id });
+    await Report.remove({ _id: req.query.reportId });
     res.send({ auth: true, success: true, message: 'report deleted' });
   
   } catch (err) {

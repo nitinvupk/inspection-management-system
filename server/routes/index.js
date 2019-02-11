@@ -2,8 +2,8 @@ const express = require('express'),
       router = express.Router(),
       bodyParser = require('body-parser'),
       verifyToken = require('../auth/verifyToken'),
-      userServices = require('../controller/user');
-      reportServices = require('../controller/report');
+      userServices = require('../controller/user'),
+      reportServices = require('../controller/report'),
       commentServices = require('../controller/comment');
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -15,9 +15,10 @@ router.get('/logout', userServices.logoutUser);
 
 router.post('/report', verifyToken, reportServices.createReport);
 router.get('/reports', verifyToken, reportServices.getReports);
+router.put('/report', verifyToken, reportServices.updateReport);
+router.delete('/report', verifyToken, reportServices.deleteReport);
+
 router.post('/report/comment', verifyToken, commentServices.createComment);
 router.get('/report/comment', verifyToken, commentServices.getComments);
-router.put('/report/:id', verifyToken, reportServices.updateReport);
-router.delete('report/:id', verifyToken, reportServices.deleteReport);
 
 module.exports = router;
