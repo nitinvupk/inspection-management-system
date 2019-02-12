@@ -6,7 +6,8 @@ import {
 
 const initialState = {
   reports: [],
-  addInspectionReport: ""
+  addInspectionReport: "",
+  statusUpdate: ''
 };
 
 const inspectionReport = (state = initialState, action) => {
@@ -23,7 +24,8 @@ const inspectionReport = (state = initialState, action) => {
       };
     case UPDATE_STATUS_SUCCESS:
       return {
-        ...state
+        ...state,
+        statusUpdate: action.payload.status
       };
     default:
       return state;

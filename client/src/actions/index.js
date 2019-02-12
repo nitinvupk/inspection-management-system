@@ -12,6 +12,8 @@ import { LOGIN_USER,
          COMMENT_DETAILS_SUCCESS,
          UPDATE_STATUS,
          UPDATE_STATUS_SUCCESS,
+         LOGOUT_USER,
+         LOGOUT_SUCCESS,
          USER_LOCATION,
          USER_LOCATION_SUCCESS,
          WEATHER_LOCATION_DETAILS,
@@ -36,7 +38,7 @@ export const addInspectionReport = payload => ({ type: ADD_INSPECTION_REPORT, pa
 
 export const addInspectionReportSuccess = payload => ({ type:ADD_INSPECTION_REPORT_SUCCESS, payload });
 
-export const getInspectionReport = () => ({ type: INSPECTION_REPORT });
+export const getInspectionReport = query => ({ type: INSPECTION_REPORT, query });
 
 export const listInspectionReport = (payload) => ({ type: INSPECTION_REPORT_SUCCESS, payload });
 
@@ -51,6 +53,10 @@ export const listComments = (payload) => ({ type: COMMENT_DETAILS_SUCCESS, paylo
 export const updateStatus = payload => ({ type: UPDATE_STATUS, payload });
 
 export const updateStatusSuccess = payload => ({ type:UPDATE_STATUS_SUCCESS, payload });
+
+export const logoutUser = () => ({ type:LOGOUT_USER });
+
+export const logoutSuccess = () => ({ type:LOGOUT_SUCCESS });
 
 
 

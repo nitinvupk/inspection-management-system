@@ -1,0 +1,13 @@
+input[type='text'].add_inspection_field{
+  background: none;
+  border: #ccc solid 1px;
+  margin: 0;
+}
+.add_inception_report_box{
+  border: #ccc solid 1px;
+  border-radius: 10px;
+  padding: 30px !important;
+}
+.add_inception_report_box label{
+  font-weight: 600;
+}

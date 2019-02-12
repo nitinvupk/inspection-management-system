@@ -15,7 +15,7 @@ export function* watchAddInspectionReport() {
 
 function* addInspectionReport(data) {
   try {
-    const payload = yield call(api.create, "/api/report", data.payload);
+    const payload = yield call(api.createReport, "/api/report", data.payload);
     yield put({ type: ADD_INSPECTION_REPORT_SUCCESS, payload });
   } catch (err) {
     console.log(err);
@@ -26,9 +26,9 @@ export function* watchInspectionReport() {
   yield takeEvery(INSPECTION_REPORT, getInspectionReport);
 }
 
-function* getInspectionReport() {
+function* getInspectionReport({query}) {
   try {
-    const payload = yield call(api.get, "/api/reports");
+    const payload = yield call(api.get, `/api/reports?archived=${query.archived}`);
     yield put({ type: INSPECTION_REPORT_SUCCESS, payload });
   } catch (err) {
     console.log(err);

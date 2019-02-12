@@ -1,10 +1,12 @@
-import { LOGIN_SUCCESS, REGISTER_USER_SUCCESS } from "../constants";
+import { LOGIN_SUCCESS, REGISTER_USER_SUCCESS, LOGOUT_SUCCESS } from "../constants";
 
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return action.payload;
     case REGISTER_USER_SUCCESS:
+      return action.payload;
+    case LOGOUT_SUCCESS:
       return action.payload;
 
     default:

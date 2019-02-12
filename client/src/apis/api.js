@@ -51,4 +51,14 @@ const create = async (url,user) => {
     console.log(err);
   }
 }
-export default { get, put, remove, create, getIPInfo }
+
+const createReport = async (url,user) => {
+  try{
+    const response = await axios.post(`${baseUrl}${url}`,user, { headers:{"x-access-token": window.localStorage.getItem("token"), 'content-type': 'multipart/form-data'}});
+    return response.data;
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+export default { get, put, remove, create, getIPInfo, createReport }

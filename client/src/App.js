@@ -10,8 +10,10 @@ import AddInspectionReport from './containers/addInspectionReport';
 class App extends Component {
   render() {
 
+    const auth = window.localStorage.getItem('auth');
+
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={(props) => window.localStorage.getItem('token') ?
+      <Route {...rest} render={(props) => window.localStorage.getItem('token') && auth === 'true' ?
       <Component {...props}/> : <Redirect to='/'/>}
       />
     );
