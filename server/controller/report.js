@@ -1,5 +1,6 @@
 const Report = require("../models/report");
 
+
 exports.createReport = async (req, res) => {
   try {
     if (
@@ -20,7 +21,7 @@ exports.createReport = async (req, res) => {
       project_name: req.body.project_name,
       floor: req.body.floor,
       zone: req.body.zone,
-      image: req.body.image,
+      image: req.file.path,
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
@@ -39,7 +40,11 @@ exports.getReports = async (req, res) => {
   try {
     let reports;
     if (req.userRole === "Safety Manager") {
-      reports = await Report.find({});
+      if(req.query.archived === 'Yes') {
+      reports = await Report.find({ archived: true });
+    }else {
+      reports = await Report.find({ archived: false });
+    }
     }
     if (req.userRole === "Safety Officer") {
       reports = await Report.find({ created_by: req.userId });
@@ -61,7 +66,7 @@ exports.updateReport = async (req, res) => {
         status: req.body.status,
         archived: true
       };
-    } else {
+    }  else {
       updateQuery = {
         status: req.body.status
       };
@@ -70,7 +75,7 @@ exports.updateReport = async (req, res) => {
       { _id: req.query.reportId },
       updateQuery
     );
-    res.send({ auth: true, success: true, report });
+    res.send({ auth: true, status: req.body.status });
   } catch (err) {
     console.log(err);
   }

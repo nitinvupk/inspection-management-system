@@ -5,6 +5,17 @@ const express = require('express'),
       userServices = require('../controller/user'),
       reportServices = require('../controller/report'),
       commentServices = require('../controller/comment');
+      const path = require("path");
+      const multer = require("multer");
+
+      const storage = multer.diskStorage({
+        destination: './files',
+        filename(req, file, cb) {
+          cb(null, `${new Date()}-${file.originalname}`);
+        },
+      });
+
+      const upload = multer({ storage });
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -13,7 +24,7 @@ router.post('/register', userServices.registerUser);
 router.post('/login', userServices.loginUsers);
 router.get('/logout', userServices.logoutUser);
 
-router.post('/report', verifyToken, reportServices.createReport);
+router.post('/report', verifyToken, upload.single('myImage'), reportServices.createReport);
 router.get('/reports', verifyToken, reportServices.getReports);
 router.put('/report', verifyToken, reportServices.updateReport);
 router.delete('/report', verifyToken, reportServices.deleteReport);

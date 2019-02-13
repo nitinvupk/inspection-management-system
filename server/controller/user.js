@@ -29,11 +29,11 @@ exports.registerUser = async (req, res) => {
     });
 
     const token = jwt.sign({id: user._id, role: user.role}, config.secret, {expiresIn: 86400});
-    
+
     user.loginToken = token;
     await user.save();
     res.send({auth: true, token: token, currentUser:user});
-  
+
   } catch (err) {
     console.log(err);
   }
@@ -41,17 +41,17 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUsers = async (req, res) => {
   try{
-    
+
     if((req.body.email) && (req.body.password)){
       const user = await User.findOne({ email: req.body.email });
-      
-      if(!user){ 
+
+      if(!user){
         res.send({auth: false, message: "no user was found."});
         return
       }
       const passwordIsValid = bcrypt.compareSync(req.body.password,user.password);
-      
-      if(!passwordIsValid){ 
+
+      if(!passwordIsValid){
         res.send({auth: false, message: "Username or password incorrect"});
         return
       }
