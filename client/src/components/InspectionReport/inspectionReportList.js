@@ -1,25 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import EditModal from '../editModal';
 import CommentModal from "../commentModal";
 import CommentList from "../commentList";
+import NoRecord from "../noRecord";
 
 class InspectionReport extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reportId: "",
+      title: "",
+      description: "",
+      updatedStatus: "",
       showList: false,
       userRole: window.localStorage.getItem("role")
     };
     this.msg = React.createRef();
     this.user = React.createRef();
+    this.title = React.createRef();
+    this.description = React.createRef();
     this.handleComment = this.handleComment.bind(this);
     this.handleShowComment = this.handleShowComment.bind(this);
     this.handleShowList = this.handleShowList.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleArchived = this.handleArchived.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   handleLogout() {
@@ -28,6 +36,14 @@ class InspectionReport extends React.Component {
 
   handleArchived() {
     this.props.getInspectionReport({ archived: "Yes" });
+  }
+
+  handleUpdate() {
+    const title = this.title.current.value;
+    const reportId = this.state.reportId;
+    const description = this.description.current.value;
+    const status = this.state.updatedStatus;
+    this.props.updateData({ title, description, status, reportId });
   }
 
   handleComment() {
@@ -142,15 +158,16 @@ class InspectionReport extends React.Component {
                       <th scope="col">Date</th>
                       <th scope="col">Action</th>
                       <th scope="col">Comment View</th>
-                      <th scope="col" />
                       {(this.state.userRole === "Safety Manager" ||
                         this.state.userRole === "Safety Engineer") && (
                         <th> Assign Status </th>
                       )}
+                      {this.state.userRole === 'Safety Officer' && <th>Edit</th>}
                     </tr>
                   </thead>
                   <tbody>
-                    {reports.map((report, index) => (
+                  {reports.length > 0 ?
+                    reports.map((report, index) => (
                       <React.Fragment>
                         <tr>
                           <th scope="row">{index + 1}</th>
@@ -210,12 +227,30 @@ class InspectionReport extends React.Component {
                               </select>
                             )}
                           </td>
-
+                          {this.state.userRole === 'Safety Officer' && <td>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-toggle="modal"
+                              data-target="#editModal"
+                              onClick={() =>
+                                this.setState({ reportId: report._id, title: report.title, description: report.description, updatedStatus: report.status })
+                              }
+                            >
+                              Edit
+                            </button>
+                          </td>}
                         </tr>
                       </React.Fragment>
-                    ))}
+                    )): <NoRecord />
+                  }
                   </tbody>
                 </table>
+                <EditModal
+                  title={this.title}
+                  description={this.description}
+                  onClick={this.handleUpdate}
+                />
                 <CommentModal
                   onClick={this.handleComment}
                   message={this.msg}

@@ -5,7 +5,9 @@ import {
   INSPECTION_REPORT,
   INSPECTION_REPORT_SUCCESS,
   UPDATE_STATUS,
-  UPDATE_STATUS_SUCCESS
+  UPDATE_STATUS_SUCCESS,
+  UPDATE_DATA,
+  UPDATE_DATA_SUCCESS
 } from "../constants";
 import api from "../apis/api";
 
@@ -43,6 +45,19 @@ function* updateStatus(data) {
   try {
     const payload = yield call(api.put, `/api/report?reportId=${data.payload.reportId}`, data.payload.status);
     yield put({ type: UPDATE_STATUS_SUCCESS, payload });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* watchUpdateData() {
+  yield takeEvery(UPDATE_DATA, updateData);
+}
+
+function* updateData(data) {
+  try {
+    const payload = yield call(api.put, `/api/reportUpdate?reportId=${data.payload.reportId}`, data.payload);
+    yield put({ type: UPDATE_DATA_SUCCESS, payload });
   } catch (err) {
     console.log(err);
   }

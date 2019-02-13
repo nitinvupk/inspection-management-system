@@ -27,6 +27,7 @@ router.get('/logout', userServices.logoutUser);
 router.post('/report', verifyToken, upload.single('myImage'), reportServices.createReport);
 router.get('/reports', verifyToken, reportServices.getReports);
 router.put('/report', verifyToken, reportServices.updateReport);
+router.put('/reportUpdate', verifyToken, reportServices.updateSingleReport);
 router.delete('/report', verifyToken, reportServices.deleteReport);
 
 router.post('/report/comment', verifyToken, commentServices.createComment);

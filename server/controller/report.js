@@ -58,6 +58,23 @@ exports.getReports = async (req, res) => {
   }
 };
 
+exports.updateSingleReport = async (req, res) => {
+  try {
+      const updateQuery = {
+        status: 'Opened',
+        title: req.body.status.title,
+        description: req.body.status.description,
+      };
+    const report = await Report.findOneAndUpdate(
+      { _id: req.query.reportId },
+      updateQuery
+    );
+    res.send({ auth: true, status: req.body.status });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.updateReport = async (req, res) => {
   try {
     let updateQuery;
@@ -66,7 +83,7 @@ exports.updateReport = async (req, res) => {
         status: req.body.status,
         archived: true
       };
-    }  else {
+    }else {
       updateQuery = {
         status: req.body.status
       };

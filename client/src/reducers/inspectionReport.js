@@ -1,13 +1,15 @@
 import {
   ADD_INSPECTION_REPORT_SUCCESS,
   INSPECTION_REPORT_SUCCESS,
-  UPDATE_STATUS_SUCCESS
+  UPDATE_STATUS_SUCCESS,
+  UPDATE_DATA_SUCCESS
 } from "../constants";
 
 const initialState = {
   reports: [],
   addInspectionReport: "",
-  statusUpdate: ''
+  statusUpdate: '',
+  updatedData: ''
 };
 
 const inspectionReport = (state = initialState, action) => {
@@ -27,6 +29,11 @@ const inspectionReport = (state = initialState, action) => {
         ...state,
         statusUpdate: action.payload.status
       };
+      case UPDATE_DATA_SUCCESS:
+        return {
+          ...state,
+          updatedData: action.payload
+        };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import InspectionReportList from '../components/InspectionReport/inspectionReportList';
-import { getInspectionReport, addComment, getComments, updateStatus, logoutUser } from '../actions';
+import { getInspectionReport, addComment, getComments, updateStatus, updateData, logoutUser } from '../actions';
 
 const mapStateToProps = state => ({
   reports: state.inspectionReport.reports,
@@ -13,6 +13,7 @@ const mapDispatchToProps = {
   addComment,
   getComments,
   updateStatus,
+  updateData,
   logoutUser
 };
 
